@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NNAE — Магазин</title>
+
+    <!-- Иконки -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { margin: 0; font-family: Arial; background: #f5f5f5; }
+
+        header {
+            background: #1e1e1e;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo { font-size: 28px; color: aqua; }
+
+        nav a {
+            color: salmon;
+            margin-left: 25px;
+            text-decoration: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        nav a:hover { color: white; }
+
+        section { display: none; padding: 40px; }
+        section.active { display: block; }
+
+        /* HERO */
+        .hero {
+            background: url("https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=1650&q=80") center/cover no-repeat;
+            height: 450px;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding-left: 80px;
+        }
+        .hero h1 { font-size: 60px; }
+        .hero button {
+            padding: 12px 22px;
+            border: none;
+            background: salmon;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* ABOUT */
+        .about { text-align: center; }
+        .about img {
+            width: 330px;
+            border-radius: 10px;
+            border: 3px solid black;
+        }
+
+        /* SERVICES */
+        .services {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .card {
+            width: 250px;
+            background: rgb(43, 43, 99);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .card i { font-size: 40px; margin-bottom: 15px; }
+        .card button {
+            margin-top: 15px;
+            background: salmon;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* PRODUCTS */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+        .product-card {
+            width: 260px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .product-card button {
+            width: 100%;
+            margin-top: 10px;
+            background: salmon;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #1e1e1e;
+            color: white;
+            margin-top: 50px;
+        }
+
+        /* MODAL */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,.65);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 320px;
+            text-align: center;
+        }
+        .modal button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: salmon;
+            border: none;
+            color: white;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">NNAE</div>
+    <nav>
+        <a onclick="openTab('home')">Главная</a>
+        <a onclick="openTab('about')">О нас</a>
+        <a onclick="openTab('products')">Товары</a>
+        <a onclick="openTab('gallery')">Галерея</a>
+        <a onclick="openTab('reg')">Регистрация</a>
+    </nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="active">
+    <div class="hero">
+        <div>
+            <h1>Адаптивный дизайн</h1>
+            <p>Современные шаблоны, отличное качество.</p>
+            <button onclick="openModal('Адаптивный дизайн — подробности')">Подробнее</button>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="about">
+        <h2>О компании</h2>
+        <p>Мы создаём удобные и современные решения для онлайн-магазинов.</p>
+        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1000&q=60">
+        <br><br>
+        <button onclick="openModal('Информация о компании')">Подробнее</button>
+    </div>
+
+    <h2 style="text-align:center;">Наши услуги</h2>
+    <div class="services">
+        <div class="card">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <h3>Быстрая покупка</h3>
+            <button onclick="openModal('Быстрая покупка — описание')">Подробнее</button>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h3>Доставка</h3>
+            <button onclick="openModal('Доставка по России — информация')">Подробнее</button>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-credit-card"></i>
+            <h3>Оплата</h3>
+            <button onclick="openModal('Оплата — способы и детали')">Подробнее</button>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3>Маркетинг</h3>
+            <button onclick="openModal('Маркетинговые услуги — подробности')">Подробнее</button>
+        </div>
+    </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+    <h2 style="text-align:center;">Наши товары</h2>
+    <div class="products">
+
+        <div class="product-card">
+            <img src="http://img.alicdn.com/imgextra/i1/619317564/TB2wEQidctnpuFjSZFvXXbcTpXa_!!619317564.jpg">
+            <h3>Спортивная кофта</h3>
+            <p>Цена: 2500C</p>
+            <button onclick="openModal('Кофта — 2500C')">Подробнее</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://avatars.mds.yandex.net/get-mpic/10352132/img_id8183362885809798048.jpeg/orig">
+            <h3>Кроссовки</h3>
+            <p>Цена: 4900C</p>
+            <button onclick="openModal('Кроссовки — 4900C')">Подробнее</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://img.joomcdn.net/71d7df60bf8e4d0093be53e06d31a7a88f2bbcf4_original.jpeg">
+            <h3>Куртка зимняя</h3>
+            <p>Цена: 7200C</p>
+            <button onclick="openModal('Куртка зимняя — 7200C')">Подробнее</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://avatars.mds.yandex.net/i?id=daa060d42de958b876855af83fb8c6ffdb5013aa-11776591-images-thumbs&n=13">
+            <h3>Футболка</h3>
+            <p>Цена: 1300C</p>
+            <button onclick="openModal('Футболка — 1300C')">Подробнее</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- GALLERY -->
+
+    
+    <section id="gallery">
+    <h2 class="gallery-title">Галерея</h2>
+    <p class="gallery-sub">Фото наших товаров</p>
+
+    <div class="gallery-grid">
+
+        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=60"
+             onclick="openGalleryModal(this.src)">
+        <img src="https://i.ytimg.com/vi/Ts7zWMP51Zc/maxresdefault.jpg"
+             onclick="openGalleryModal(this.src)">
+        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=60"
+             onclick="openGalleryModal(this.src)">
+        <img src="https://img.alicdn.com/imgextra/i4/2129913985/O1CN01orXcl81fJAuA3zFP2_!!2129913985.jpg"
+             onclick="openGalleryModal(this.src)">
+        <img src="https://ir.ozone.ru/s3/multimedia-1-x/c1000/7633392405.jpg"
+             onclick="openGalleryModal(this.src)">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=60"
+             onclick="openGalleryModal(this.src)">
+
+    </div>
+    <!-- GALLERY MODAL -->
+<div id="gallery-modal-bg" class="modal-bg">
+    <div style="text-align:center;">
+        <img id="gallery-modal-img">
+        <br>
+        <button onclick="closeGalleryModal()">Закрыть</button>
+    </div>
+</div>
+
+    <style>
+            /* GALLERY */
+.gallery-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 5px;
+}
+
+.gallery-sub {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #444;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 0 40px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform .3s;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* Modal for gallery */
+#gallery-modal-bg {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#gallery-modal-bg img {
+    width: 70%;
+    max-width: 900px;
+    border-radius: 20px;
+}
+
+#gallery-modal-bg button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: salmon;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+    </style>
+</section>
+
+
+
+<!-- REGISTRATION -->
+<section id="reg">
+       <form class="main"action="#"method="post">
+        <h1>Регистрация</h1>
+        <p>Имя</p>
+        <input type="text"name="first name"placeholder="Бектемирова">
+        <p>Фамилия</p>
+        <input type="text"name="last name"placeholder="Элина">
+        <p></i>Email</p>
+        <input type="email"name="email"placeholder="bektemirova@gmail.com">
+        <p>Пароль</p>
+        <input type="password"name="password"placeholder="Введите пароль">
+        <p>Город</p>
+        <select name="city">
+            <option value="">Выберите Город</option>
+            <option value="Osh">Ош</option>
+            <option value="Bishkek">Бишкек</option>
+            <option value="Batken">Баткен</option>
+    </select>
+    <p>Возрост</p>
+    <div class="option">
+        <label><input type="radio"name="age" value="16">16</label>
+        <label><input type="radio"name="age" value="20">20</label>
+    </div>
+<p>Хобби</p>
+<div class="options">
+    <label><input type="checkbox"name="hobby"value="football">Футбол</label>
+    <label><input type="checkbox"name="hobby"value="basketball">Баскетбол</label>
+</div>
+<div class="wrapper">
+    <a href="#"
+    onclick="document.querySelector(from).submit()">Жонотуу!</a>
+
+</div>
+    </form>
+    <style>
+        .reg{
+    margin: 0;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#74b9ff,#5651ec,#9ed171);
+    font-family: "Poppins",sans-serif;
+}
+        .main{
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 30px 40px;
+    width: 320px;
+    color: #fff;
+    box-shadow: 08px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 1s ease forwards;
+}
+@keyframes fadeInUp{
+    from{
+        opacity: 0;
+        transform: translate(40px);
+    }
+}
+        h1{
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1px;
+}
+p{
+    margin: 10px 05px;
+    font-weight: 500;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select{
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #e71212;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+input::placeholder{
+    color: rgba(213, 115, 115, 0.7);
+}
+input:focus,
+select:focus{
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+select{
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right10px center;
+    background-size: 12px;
+}
+.options label{
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+}
+input[type="radio"],
+input[type="checbox"]{
+    accent-color: #6c5ce7;
+    transform: scale(1.1);
+    margin-right: 4px;
+}
+.wrapper{
+    text-align: center;
+    margin-top: 20px;
+}
+.wrapper a{
+    display: inline-block;
+    padding: 10px 30px;
+    border-radius: 25px;
+    background: linear-gradient(135deg,#6c5ce7,#74ff80);
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.wrapper a::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: left 0.4s;
+}
+ .wrapper a:hover::before{
+    left: 100px;
+}
+.wrapper a :hover{
+    transform: translate(-2px);
+    box-shadow: 04px 15px rgba(0, 0, 0, 0.3);;
+}
+    </style>
+</section>
+
+<!-- MODAL -->
+<div id="modal-bg" class="modal-bg">
+    <div class="modal">
+        <h3 id="modal-text"></h3>
+        <button onclick="closeModal()">Закрыть</button>
+    </div>
+</div>
+
+<footer>
+    © 2025 Big Retail — Все права защищены
+</footer>
+
+<script>
+function openTab(id) {
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+function openModal(text) {
+    document.getElementById("modal-text").innerText = text;
+    document.getElementById("modal-bg").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("modal-bg").style.display = "none";
+}
+function openGalleryModal(src) {
+    document.getElementById("gallery-modal-img").src = src;
+    document.getElementById("gallery-modal-bg").style.display = "flex";
+}
+
+function closeGalleryModal() {
+    document.getElementById("gallery-modal-bg").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
